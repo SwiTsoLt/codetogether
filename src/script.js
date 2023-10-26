@@ -23,21 +23,10 @@ const joinerText = document.getElementById('joiner')
 let id
 let isConnected = false
 
-const iceServers = [
-  {
-    urls: 'turn:relay.backups.cz',
-    credential: 'webrtc',
-    username: 'webrtc'
-  },
-  {
-    urls: 'turn:relay.backups.cz?transport=tcp',
-    credential: 'webrtc',
-    username: 'webrtc'
-  }
-]
-
 // eslint-disable-next-line no-undef
-const pc = new RTCPeerConnection({ iceServers })
+const pc = new RTCPeerConnection({
+  iceServers: [{ urls: 'stun:stun.l.google.com:19302' }]
+})
 
 // Listen emits
 
@@ -142,7 +131,8 @@ pc.addEventListener('track', event => {
 })
 
 function startWebRtcConnection () {
-  navigator.mediaDevices.getUserMedia({ audio: true })
+  navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia
+  navigator.getUserMedia({ audio: true })
     .then(async stream => {
       const dataChannel = pc.createDataChannel('audioChannel')
 
@@ -156,5 +146,8 @@ function startWebRtcConnection () {
       await pc.setLocalDescription(description)
 
       socket.emit('description', { description })
+    })
+    .catch(error => {
+      console.error(error)
     })
 }
