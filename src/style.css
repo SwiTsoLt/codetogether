@@ -1,0 +1,103 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+html, body {
+    width: 100%;
+}
+
+body {
+    font-family: monospace;
+    height: 100vh;
+    overflow: hidden;
+    background-color: aliceblue;
+}
+
+.interface {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    align-items: center;
+    width: 100vw;
+    height: 50px;
+    background-color: #303040;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.interface > .roomId {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.interface > .roomId.show {
+    opacity: 1;
+}
+
+.interface > .roomId > button {
+    width: 20px;
+    height: 20px;
+    background-color: transparent;
+    background-image: url("./images/copy.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.interface > .roomId > button:active  {
+    transform: scale(0.9);
+}
+
+.interface > .createJoinButtons > button {
+    width: 200px;
+    height: 30px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    font-weight: bold;
+    color: #303040;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.interface > .createJoinButtons > button:hover  {
+    background-color: #ff96ca;
+    color: #ffffff;
+}
+
+.wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+    width: 100vw;
+    height: calc(100vh - 50px);
+    background-color: #303040;
+}
+
+.wrapper > div {
+    background-color: #ffffff;
+    padding: 30px;
+}
+
+.wrapper > div > textarea {
+    width: 100%;
+    height: 100%;
+    outline: none;
+    border: none;
+    resize: none;
+    background-color: transparent;
+}
+
+audio {
+    position: absolute;
+    visibility: hidden;
+    pointer-events: none;
+}
