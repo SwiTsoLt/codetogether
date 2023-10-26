@@ -74,44 +74,6 @@ io.on('connection', socket => {
   socket.on('disconnect', () => {
     console.log(`disconnect ${socket.id}`)
   })
-
-  // WebRTC
-
-  socket.on('description', ({ description }) => {
-    const rooms = getSocketRooms(socket)
-
-    if (!rooms.length) {
-      console.log('no rooms to send')
-      return
-    }
-
-    const room = io.sockets.adapter.rooms.get(rooms[0])
-
-    if (!room) {
-      console.log(`Room ${rooms[0]} not found!`)
-      return
-    }
-
-    socket.to(rooms[0]).emit('description', { description })
-  })
-
-  socket.on('icecandidate', ({ candidate }) => {
-    const rooms = getSocketRooms(socket)
-
-    if (!rooms.length) {
-      console.log('no rooms to send')
-      return
-    }
-
-    const room = io.sockets.adapter.rooms.get(rooms[0])
-
-    if (!room) {
-      console.log(`Room ${rooms[0]} not found!`)
-      return
-    }
-
-    socket.to(rooms[0]).emit('icecandidate', { candidate })
-  })
 })
 
 server.listen(PORT)
