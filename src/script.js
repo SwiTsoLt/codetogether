@@ -1,5 +1,15 @@
+const origin = window.location.href
+  .split('//')[1]
+  .split(':')[0]
+  .split('/')[0]
+const url = window.location.href.includes('https')
+  ? `wss://${origin}`
+  : `ws://${origin}:3000`
+
 // eslint-disable-next-line no-undef
-const socket = io()
+const socket = io(url, {
+  reconnectionDelayMax: Infinity
+})
 
 const roomIdElem = document.getElementById('roomId')
 const createButton = document.getElementById('createButton')
@@ -14,14 +24,14 @@ let id
 let isConnected = false
 
 const pc = new RTCPeerConnection({
-    iceServers: [
-        {
-            urls: ['stun:stun.voiparound.com']
-        },
-        {
-            urls: ['stun:stun.voxgratia.org']
-        }
-    ]
+  iceServers: [
+    {
+      urls: ['stun:stun.voiparound.com']
+    },
+    {
+      urls: ['stun:stun.voxgratia.org']
+    }
+  ]
 })
 
 // Listen emits
@@ -61,7 +71,7 @@ socket.on('description', async ({ description }) => {
   if (pc.localDescription) {
     await pc.setRemoteDescription(description)
   } else {
-    navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true } })
+    navigator.mediaDevices.getUserMedia({ audio: true })
       .then(async stream => {
         await pc.setRemoteDescription(description)
 
@@ -128,7 +138,7 @@ pc.addEventListener('track', event => {
 })
 
 function startWebRtcConnection () {
-  navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true } })
+  navigator.mediaDevices.getUserMedia({ audio: true })
     .then(async stream => {
       const dataChannel = pc.createDataChannel('audioChannel')
 
