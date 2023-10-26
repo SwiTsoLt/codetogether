@@ -23,8 +23,21 @@ const joinerText = document.getElementById('joiner')
 let id
 let isConnected = false
 
+const iceServers = [
+  {
+    urls: 'turn:relay.backups.cz',
+    credential: 'webrtc',
+    username: 'webrtc'
+  },
+  {
+    urls: 'turn:relay.backups.cz?transport=tcp',
+    credential: 'webrtc',
+    username: 'webrtc'
+  }
+]
+
 // eslint-disable-next-line no-undef
-const pc = new RTCPeerConnection({ iceServers: [{ urls: ['stun:stun.l.google.com:19302'] }] })
+const pc = new RTCPeerConnection({ iceServers })
 
 // Listen emits
 
