@@ -13,26 +13,16 @@ const joinerText = document.getElementById('joiner')
 let id
 let isConnected = false
 
-const iceServers = [
-  {
-    urls: [
-      {
-        username: undefined,
-        credential: undefined,
-        url: 'stun:stun.voiparound.com',
-        urls: ['stun:stun.voiparound.com']
-      },
-      {
-        username: undefined,
-        credential: undefined,
-        url: 'stun:stun.voxgratia.org',
-        urls: ['stun:stun.voxgratia.org']
-      }
+const pc = new RTCPeerConnection({
+    iceServers: [
+        {
+            urls: ['stun:stun.voiparound.com']
+        },
+        {
+            urls: ['stun:stun.voxgratia.org']
+        }
     ]
-  }
-]
-
-const pc = new RTCPeerConnection({ iceServers })
+})
 
 // Listen emits
 
