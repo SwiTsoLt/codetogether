@@ -131,23 +131,24 @@ pc.addEventListener('track', event => {
 })
 
 function startWebRtcConnection () {
-  navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia
-  navigator.getUserMedia({ audio: true })
-    .then(async stream => {
-      const dataChannel = pc.createDataChannel('audioChannel')
+  const getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia
+  getUserMedia.call(navigator, {
+    video: false,
+    audio: true
+  }, async (stream) => {
+    const dataChannel = pc.createDataChannel('audioChannel')
 
-      stream.getTracks().forEach((track) => pc.addTrack(track))
+    stream.getTracks().forEach((track) => pc.addTrack(track))
 
-      dataChannel.addEventListener('open', () => {
-        console.log('web rtc connect!')
-      })
-
-      const description = await pc.createOffer()
-      await pc.setLocalDescription(description)
-
-      socket.emit('description', { description })
+    dataChannel.addEventListener('open', () => {
+      console.log('web rtc connect!')
     })
-    .catch(error => {
-      console.error(error)
-    })
+
+    const description = await pc.createOffer()
+    await pc.setLocalDescription(description)
+
+    socket.emit('description', { description })
+  }, (error) => {
+    console.error(error)
+  })
 }
