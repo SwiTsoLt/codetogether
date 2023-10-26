@@ -53,7 +53,7 @@ socket.on('write', ({ text }) => {
 })
 
 socket.on('message', ({ message }) => {
-  alert(message)
+  console.log(message)
 })
 
 socket.on('leave', () => {
