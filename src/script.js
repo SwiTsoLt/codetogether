@@ -50,7 +50,6 @@ socket.on('createSuccess', ({ roomId }) => {
 })
 
 socket.on('joinSuccess', () => {
-  alert('Join success!')
   isConnected = true
   socket.emit('write', { text: ownerText.value })
 })
