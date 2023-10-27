@@ -34,7 +34,7 @@ io.on('connection', socket => {
     socket.emit('createSuccess', { id: roomId })
   })
 
-  socket.on('join', ({ roomId }) => {
+  socket.on('join', ({ roomId, name }) => {
     const rooms = getRooms()
 
     if (!rooms.includes(roomId)) {
@@ -52,10 +52,9 @@ io.on('connection', socket => {
     socket.join(roomId)
     socket.emit('joinSuccess', { roomClients: [...roomClients, socket.id] })
     socket.to(roomId).emit('joinSuccess', { roomClients: [...roomClients, socket.id] })
-    console.log(roomClients)
   })
 
-  socket.on('write', ({ text }) => {
+  socket.on('write', ({ text, name }) => {
     const rooms = getSocketRooms(socket)
 
     if (!rooms.length) {
@@ -70,7 +69,7 @@ io.on('connection', socket => {
       return
     }
 
-    socket.to(rooms[0]).emit('write', { text, id: socket.id })
+    socket.to(rooms[0]).emit('write', { text, name, id: socket.id })
   })
 
   socket.on('disconnect', () => {

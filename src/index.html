@@ -17,11 +17,11 @@
                 <div id="roomId"></div><button title="copy" id="copyButton"></button>
             </div>
             <div class="createJoinButtons">
-                <button id="createButton">create</button>
-                <button id="joinButton">join</button>
+                <button id="createButton" class="select">create</button>
+                <button id="joinButton" class="select">join</button>
             </div>
         </div>
-        <div class="tabs">
+        <div id="tabs" class="tabs">
             <div class="myTab">
                 <div id="myId"></div>
             </div>
@@ -30,10 +30,11 @@
     </div>
     <div class="wrapper">
         <div>
-            <textarea id="owner"></textarea>
+            <textarea id="owner" spellcheck="false"></textarea>
         </div>
         <div>
-            <pre><code id="joiner" disabled></code></pre>
+            <pre id="joiner"></pre>
+            
         </div>
     </div>
 </body>
