@@ -26,10 +26,12 @@ function getSocketRooms (socket) {
 io.on('connection', socket => {
   console.log(`connect ${socket.id}`)
 
+  socket.emit('myId', { id: socket.id })
+
   socket.on('create', () => {
-    const newRoomId = v4()
-    socket.join(newRoomId)
-    socket.emit('createSuccess', { roomId: newRoomId })
+    const roomId = v4()
+    socket.join(roomId)
+    socket.emit('createSuccess', { id: roomId })
   })
 
   socket.on('join', ({ roomId }) => {
@@ -40,17 +42,17 @@ io.on('connection', socket => {
       return
     }
 
-    const roomClient = Array.from(io.sockets.adapter.rooms.get(roomId).keys())
+    const roomClients = Array.from(io.sockets.adapter.rooms.get(roomId).keys())
 
-    if (roomClient.length > 1) {
-      socket.emit('message', { message: `Room \`${roomId}\` is full!` })
+    if (roomClients.includes(socket.id)) {
+      socket.emit('message', { message: 'You already join to this room' })
       return
     }
 
     socket.join(roomId)
-    socket.emit('joinSuccess')
-    socket.emit('startWebRtcConnection')
-    socket.to(roomId).emit('joinSuccess')
+    socket.emit('joinSuccess', { roomClients: [...roomClients, socket.id] })
+    socket.to(roomId).emit('joinSuccess', { roomClients: [...roomClients, socket.id] })
+    console.log(roomClients)
   })
 
   socket.on('write', ({ text }) => {
@@ -68,7 +70,7 @@ io.on('connection', socket => {
       return
     }
 
-    socket.to(rooms[0]).emit('write', { text })
+    socket.to(rooms[0]).emit('write', { text, id: socket.id })
   })
 
   socket.on('disconnect', () => {

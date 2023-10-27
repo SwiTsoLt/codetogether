@@ -16,30 +16,40 @@ body {
 }
 
 .interface {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    justify-items: center;
-    align-items: center;
     width: 100vw;
-    height: 50px;
+    height: fit-content;
     background-color: #303040;
     color: #ffffff;
     font-weight: bold;
 }
 
-.interface > .roomId {
+.interface > .top {
     display: flex;
+    justify-items: center;
     align-items: center;
-    gap: 10px;
-    opacity: 0;
-    transition: opacity 0.2s ease;
+    padding: 10px;
 }
 
-.interface > .roomId.show {
+.interface > .top > .roomId {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 50%;
+    height: fit-content;
+    opacity: 0;
+    height: 0;
+    text-align: center;
+    transition: all 0.2s ease;
+    padding-bottom: 10px;
+}
+
+.interface > .top > .roomId.show {
+    height: 30px;
     opacity: 1;
 }
 
-.interface > .roomId > button {
+.interface > .top > .roomId > button {
     width: 20px;
     height: 20px;
     background-color: transparent;
@@ -52,11 +62,20 @@ body {
     transition: all 0.2s ease;
 }
 
-.interface > .roomId > button:active  {
+.interface > .top > .roomId > button:active  {
     transform: scale(0.9);
 }
 
-.interface > .createJoinButtons > button {
+.interface > .top > .createJoinButtons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 50%;
+    height: fit-content;
+}
+
+.interface > .top > .createJoinButtons > button {
     width: 200px;
     height: 30px;
     border-radius: 8px;
@@ -68,10 +87,63 @@ body {
     transition: all 0.2s ease;
 }
 
-.interface > .createJoinButtons > button:hover  {
+.interface > .top > .createJoinButtons > button:hover  {
     background-color: #ff96ca;
     color: #ffffff;
 }
+
+/* Interface > Tabs */
+
+.interface > .tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: fit-content;
+    border-top: 4px solid #ffffff;
+}
+
+.interface > .tabs > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.interface > .tabs > .myTab {
+    padding: 10px;
+}
+
+.interface > .tabs > .joinersTabs > .tab {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    background-color: transparent;
+    border: none;
+    color: #ffffff;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.interface > .tabs > .joinersTabs > .tab.active {
+    background-color: #505070;
+}
+
+.interface > .tabs > .joinersTabs > .tab:hover {
+    background-color: #404050;
+}
+
+.interface > .tabs > .joinersTabs > .tab.active:hover {
+    background-color: #606080;
+}
+
+/* Wrapper */
 
 .wrapper {
     display: grid;
@@ -100,4 +172,16 @@ audio {
     position: absolute;
     visibility: hidden;
     pointer-events: none;
+}
+
+/* Media */
+
+@media screen and (max-width: 1000px) {
+    .interface > .top {
+        flex-direction: column;
+    }
+
+    .interface > .top > .roomId {
+        width: 100%;
+    }
 }

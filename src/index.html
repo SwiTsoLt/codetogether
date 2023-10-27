@@ -12,12 +12,20 @@
 
 <body>
     <div class="interface">
-        <div class="roomId">
-            <div id="roomId"></div><button title="copy" id="copyButton"></button>
+        <div class="top">
+            <div class="roomId">
+                <div id="roomId"></div><button title="copy" id="copyButton"></button>
+            </div>
+            <div class="createJoinButtons">
+                <button id="createButton">create</button>
+                <button id="joinButton">join</button>
+            </div>
         </div>
-        <div class="createJoinButtons">
-            <button id="createButton">create</button>
-            <button id="joinButton">join</button>
+        <div class="tabs">
+            <div class="myTab">
+                <div id="myId"></div>
+            </div>
+            <div id="joinersTabs" class="joinersTabs"></div>
         </div>
     </div>
     <div class="wrapper">
@@ -25,7 +33,7 @@
             <textarea id="owner"></textarea>
         </div>
         <div>
-            <textarea id="joiner" disabled></textarea>
+            <pre><code id="joiner" disabled></code></pre>
         </div>
     </div>
 </body>
